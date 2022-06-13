@@ -36,6 +36,6 @@ ifNotNull x | x == Null = []
             | otherwise = x
 
 
-nextMyStates::MyState->[MyState]
-nextMyStates Null = Null
-nextMyStates (S curr mines prevAction state) =  (ifNotNull [up (S curr mines prevAction state)]) ++ (ifNotNull [left (S curr mines prevAction state)]) ++ (ifNotNull [right (S curr mines prevAction state)]) ++ (ifNotNull [down (S curr mines prevAction state)])
+nextStates::MyState->[MyState]
+nextStates Null = Null
+nextStates (S curr mines prevAction state) =  (ifNotNull [up (S curr mines prevAction state)]) ++ (ifNotNull [left (S curr mines prevAction state)]) ++ (ifNotNull [right (S curr mines prevAction state)]) ++ (ifNotNull [down (S curr mines prevAction state)])
