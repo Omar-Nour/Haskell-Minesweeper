@@ -50,7 +50,9 @@ constructSolution:: MyState ->[String]
 constructSolution Null = []
 constructSolution (S curr mines prevAction state) =  filter (/="") ((constructSolution state)++[prevAction])
 
-
+solve :: Cell->[Cell]->[String]
+solve x [] = []
+solve (y,x) (h:t) = constructSolution (search [(S (y,x) (h:t) "" Null)])
 
 --for solve:
 --search for a goal state
