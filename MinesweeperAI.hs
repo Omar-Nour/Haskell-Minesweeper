@@ -10,7 +10,7 @@ up (S (y,x) mines prevAction state) | y <= 0 = Null
 
 down:: MyState -> MyState
 down Null = Null
-down (S (y,x) mines prevAction state) | y >= 3 = Nulls
+down (S (y,x) mines prevAction state) | y >= 3 = Null
                                       | otherwise = (S (y+1,x) mines "down" (S (y,x) mines prevAction state))
 
 left:: MyState -> MyState
