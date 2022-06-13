@@ -40,3 +40,19 @@ nextMyStates (S curr mines prevAction state) =   filter (/=Null) [(up (S curr mi
 isGoal::MyState->Bool
 isGoal Null = False
 isGoal (S curr mines prevAction state) =  mines == []
+
+search::[MyState]->MyState
+search [] = Null
+search (h:t) | isGoal h = h
+             | otherwise = search (t++(nextMyStates h))
+
+constructSolution:: MyState ->[String]
+constructSolution Null = []
+constructSolution (S curr mines prevAction state) =  filter (/="") ((constructSolution state)++[prevAction])
+
+
+
+--for solve:
+--search for a goal state
+--extract the strings representing the actions taken
+-- put them in an array and return
