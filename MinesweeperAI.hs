@@ -1,6 +1,6 @@
 -- 4X4 Implementation
 type Cell = (Int,Int)
-data MyState = Null | S Cell [Cell] String MyState
+data MyState = Null | S Cell [Cell] String MyState deriving (Show)
 
 
 up:: MyState -> MyState
