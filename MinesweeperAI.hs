@@ -36,3 +36,7 @@ collect (S curr mines prevAction state) | elem curr mines = (S curr (delete curr
 nextMyStates::MyState->[MyState]
 --nextStates Null = Null
 nextMyStates (S curr mines prevAction state) =   filter (/=Null) [(up (S curr mines prevAction state)), (left (S curr mines prevAction state)), (right (S curr mines prevAction state)), (down (S curr mines prevAction state))]
+
+isGoal::MyState->Bool
+isGoal Null = False
+isGoal (S curr mines prevAction state) =  mines == []
