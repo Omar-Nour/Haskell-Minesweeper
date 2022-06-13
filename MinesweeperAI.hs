@@ -31,3 +31,11 @@ collect:: MyState -> MyState
 collect Null = Null
 collect (S curr mines prevAction state) | elem curr mines = (S curr (delete curr mines) "collect" (S curr mines prevAction state))
                                         | otherwise = Null
+
+ifNotNull x | x == Null = []
+            | otherwise = x
+
+
+nextMyStates::MyState->[MyState]
+nextMyStates Null = Null
+nextMyStates (S curr mines prevAction state) =  (ifNotNull [up (S curr mines prevAction state)]) ++ (ifNotNull [left (S curr mines prevAction state)]) ++ (ifNotNull [right (S curr mines prevAction state)]) ++ (ifNotNull [down (S curr mines prevAction state)])
