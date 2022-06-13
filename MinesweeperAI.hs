@@ -5,20 +5,20 @@ data MyState = Null | S Cell [Cell] String MyState
 
 up:: MyState -> MyState
 up Null = Null
-up (S (y,x) mines prevAction MyState) | y <= 0 = Null
-                                      | otherwise = (S (y-1,x) mines "up" ((S (y,x) mines prevAction MyState)))
+up (S (y,x) mines prevAction state) | y <= 0 = Null
+                                      | otherwise = (S (y-1,x) mines "up" ((S (y,x) mines prevAction state)))
 
 down:: MyState -> MyState
 down Null = Null
-down (S (y,x) mines prevAction MyState) | y >= 3 = Null
-                                        | otherwise = (S (y+1,x) mines "down" (S (y,x) mines prevAction MyState))
+down (S (y,x) mines prevAction state) | y >= 3 = Null
+                                        | otherwise = (S (y+1,x) mines "down" (S (y,x) mines prevAction state))
 
 left:: MyState -> MyState
 left Null = Null
-left (S (y,x) mines prevAction MyState) | x <= 0 = Null
-                                        | otherwise = (S (y,x-1) mines "left" ((S (y,x) mines prevAction MyState)))
+left (S (y,x) mines prevAction state) | x <= 0 = Null
+                                        | otherwise = (S (y,x-1) mines "left" ((S (y,x) mines prevAction state)))
 
 right:: MyState -> MyState
 right Null = Null
-right (S (y,x) mines prevAction MyState) | x >= 3 = Null
-                                         | otherwise = (S (y,x+1) mines "right" ((S (y,x) mines prevAction MyState)))
+right (S (y,x) mines prevAction state) | x >= 3 = Null
+                                         | otherwise = (S (y,x+1) mines "right" ((S (y,x) mines prevAction state)))
