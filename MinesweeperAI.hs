@@ -34,8 +34,7 @@ collect (S curr mines prevAction state) | elem curr mines = (S curr (delete curr
 
 
 nextMyStates::MyState->[MyState]
---nextStates Null = Null
-nextMyStates (S curr mines prevAction state) =   filter (/=Null) [(up (S curr mines prevAction state)), (left (S curr mines prevAction state)), (right (S curr mines prevAction state)), (down (S curr mines prevAction state))]
+nextMyStates (S curr mines prevAction state) =   filter (/=Null) [(up (S curr mines prevAction state)), (left (S curr mines prevAction state)), (right (S curr mines prevAction state)), (down (S curr mines prevAction state)),(collect (S curr mines prevAction state))]
 
 isGoal::MyState->Bool
 isGoal Null = False
@@ -52,8 +51,3 @@ constructSolution (S curr mines prevAction state) =  filter (/="") ((constructSo
 
 solve :: Cell->[Cell]->[String]
 solve (y,x) (h:t) = constructSolution (search([(S (y,x) (h:t) "" Null)]))
-
---for solve:
---search for a goal state
---extract the strings representing the actions taken
--- put them in an array and return
