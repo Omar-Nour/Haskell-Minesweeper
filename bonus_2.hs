@@ -40,6 +40,7 @@ nextMyStates (S curr mines prevAction state n m) =   filter (/=Null) [(up (S cur
 manhattan (y,x) (y2,x2) = abs(y-y2)+abs(x-x2)
 
 -- they work
+closest (S loc [] prevAction state n m) = loc
 closest (S (y,x) ((yMine,xMine):t) prevAction state n m) = closestMine (S (y,x) ((yMine,xMine):t) prevAction state n m) (n*m) (n,m)
 
 closestMine (S (y,x) [] prevAction state n m) minDist minMine = minMine
