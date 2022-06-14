@@ -41,12 +41,19 @@ manhattan (y,x) (y2,x2) = abs(y-y2)+abs(x-x2)
 
 -- they work
 closest (S (y,x) ((yMine,xMine):t) prevAction state n m) = closestMine (S (y,x) ((yMine,xMine):t) prevAction state n m) (n*m) (n,m)
+
 closestMine (S (y,x) [] prevAction state n m) minDist minMine = minMine
 closestMine (S (y,x) ((yMine,xMine):t) prevAction state n m) minDist minMine
   | manhattan (y,x) (yMine,xMine) < minDist = closestMine (S (y,x) t prevAction state n m) (manhattan (y,x) (yMine,xMine)) (yMine,xMine)
   | otherwise = closestMine (S (y,x) t prevAction state n m) minDist minMine
 
---closestState closest_mine ((S curr mines prevAction state n m):t) = closest
+getToClosestMine (S (y,x) mines prevAction state n m) (yMine,xMine)
+ | isGoal (S (y,x) mines prevAction state n m) = constructSolution (S (y,x) mines prevAction state n m)
+ | y == yMine & x == xMine = getToClosestMine (collect ((S (y,x) mines prevAction state n m))) (closest (collect ((S (y,x) mines prevAction state n m))))
+ | y < yMine = getToClosestMine(down ((S (y,x) mines prevAction state n m))) (yMine,xMine)
+ | y > yMine = getToClosestMine(up ((S (y,x) mines prevAction state n m))) (yMine,xMine)
+ | x < xMine = getToClosestMine(right ((S (y,x) mines prevAction state n m))) (yMine,xMine)
+ | x > xMine = getToClosestMine(left ((S (y,x) mines prevAction state n m))) (yMine,xMine)
 
 isGoal::MyState->Bool
 isGoal Null = False
@@ -71,4 +78,4 @@ maxY ((y,x):t) | (maxY t) > y = maxY t
 
 -- infer size of grid from initial position and mine positions
 solve :: Cell->[Cell]->[String]
-solve (y,x) (h:t) = constructSolution (search([(S (y,x) (h:t) "" Null (maxY ([(y,x)]++(h:t))) (maxX ([(y,x)]++(h:t))))]))
+solve (y,x) (h:t) = getToClosestMine (S (y,x) (h:t) "" Null (maxY ([(y,x)]++(h:t))) (maxX ([(y,x)]++(h:t)))) (closest (S (y,x) (h:t) "" Null (maxY ([(y,x)]++(h:t))) (maxX ([(y,x)]++(h:t)))))
