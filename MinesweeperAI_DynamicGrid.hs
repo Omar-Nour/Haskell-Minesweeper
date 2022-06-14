@@ -7,7 +7,7 @@ data MyState = Null | S Cell [Cell] String MyState Int Int deriving (Show, Eq)
 up:: MyState -> MyState
 up Null = Null
 up (S (y,x) mines prevAction state n m) | y <= 0 = Null
-                                         | otherwise = (S (y-1,x) mines "up" (S (y,x) mines prevAction state n m) n m)
+                                        | otherwise = (S (y-1,x) mines "up" (S (y,x) mines prevAction state n m) n m)
 
 down:: MyState -> MyState
 down Null = Null
@@ -30,14 +30,14 @@ delete y (h:t) | h == y = t
 collect:: MyState -> MyState
 collect Null = Null
 collect (S curr mines prevAction state n m) | elem curr mines = (S curr (delete curr mines) "collect" (S curr mines prevAction state n m) n m)
-                                        | otherwise = Null
+                                            | otherwise = Null
 
 
 nextMyStates::MyState->[MyState]
 nextMyStates (S curr mines prevAction state n m) =   filter (/=Null) [(up (S curr mines prevAction state n m)), (left (S curr mines prevAction state n m)), (right (S curr mines prevAction state n m)), (down (S curr mines prevAction state n m)),(collect (S curr mines prevAction state n m))]
 
 
-manhattan (y,x) (y2,x2) = abs(y-y2)+abs(x-x2)
+manhattan (y,x) (y2,x2) = abs(y-y2) + abs(x-x2)
 
 -- they work
 closest (S loc [] prevAction state n m) = loc
@@ -45,16 +45,16 @@ closest (S (y,x) ((yMine,xMine):t) prevAction state n m) = closestMine (S (y,x) 
 
 closestMine (S (y,x) [] prevAction state n m) minDist minMine = minMine
 closestMine (S (y,x) ((yMine,xMine):t) prevAction state n m) minDist minMine
-  | manhattan (y,x) (yMine,xMine) < minDist = closestMine (S (y,x) t prevAction state n m) (manhattan (y,x) (yMine,xMine)) (yMine,xMine)
-  | otherwise = closestMine (S (y,x) t prevAction state n m) minDist minMine
+        | manhattan (y,x) (yMine,xMine) < minDist = closestMine (S (y,x) t prevAction state n m) (manhattan (y,x) (yMine,xMine)) (yMine,xMine)
+        | otherwise = closestMine (S (y,x) t prevAction state n m) minDist minMine
 
 getToClosestMine (S (y,x) mines prevAction state n m) (yMine,xMine)
- | isGoal (S (y,x) mines prevAction state n m) = constructSolution (S (y,x) mines prevAction state n m)
- | y == yMine && x == xMine = getToClosestMine (collect ((S (y,x) mines prevAction state n m))) (closest (collect ((S (y,x) mines prevAction state n m))))
- | y < yMine = getToClosestMine(down ((S (y,x) mines prevAction state n m))) (yMine,xMine)
- | y > yMine = getToClosestMine(up ((S (y,x) mines prevAction state n m))) (yMine,xMine)
- | x < xMine = getToClosestMine(right ((S (y,x) mines prevAction state n m))) (yMine,xMine)
- | x > xMine = getToClosestMine(left ((S (y,x) mines prevAction state n m))) (yMine,xMine)
+        | isGoal (S (y,x) mines prevAction state n m) = constructSolution (S (y,x) mines prevAction state n m)
+        | y == yMine && x == xMine = getToClosestMine (collect ((S (y,x) mines prevAction state n m))) (closest (collect ((S (y,x) mines prevAction state n m))))
+        | y < yMine = getToClosestMine(down ((S (y,x) mines prevAction state n m))) (yMine,xMine)
+        | y > yMine = getToClosestMine(up ((S (y,x) mines prevAction state n m))) (yMine,xMine)
+        | x < xMine = getToClosestMine(right ((S (y,x) mines prevAction state n m))) (yMine,xMine)
+        | x > xMine = getToClosestMine(left ((S (y,x) mines prevAction state n m))) (yMine,xMine)
 
 isGoal::MyState->Bool
 isGoal Null = False
