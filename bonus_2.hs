@@ -80,3 +80,6 @@ maxY ((y,x):t) | (maxY t) > y = maxY t
 -- infer size of grid from initial position and mine positions
 solve :: Cell->[Cell]->[String]
 solve (y,x) (h:t) = getToClosestMine (S (y,x) (h:t) "" Null (maxY ([(y,x)]++(h:t))) (maxX ([(y,x)]++(h:t)))) (closest (S (y,x) (h:t) "" Null (maxY ([(y,x)]++(h:t))) (maxX ([(y,x)]++(h:t)))))
+-- the logic this time around is to scan for the closest mine to the current location
+-- of the robot, and then to get to it and collect it, then repeat the process
+-- again untill all mines are collected
