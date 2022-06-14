@@ -49,7 +49,7 @@ closestMine (S (y,x) ((yMine,xMine):t) prevAction state n m) minDist minMine
 
 getToClosestMine (S (y,x) mines prevAction state n m) (yMine,xMine)
  | isGoal (S (y,x) mines prevAction state n m) = constructSolution (S (y,x) mines prevAction state n m)
- | y == yMine & x == xMine = getToClosestMine (collect ((S (y,x) mines prevAction state n m))) (closest (collect ((S (y,x) mines prevAction state n m))))
+ | y == yMine && x == xMine = getToClosestMine (collect ((S (y,x) mines prevAction state n m))) (closest (collect ((S (y,x) mines prevAction state n m))))
  | y < yMine = getToClosestMine(down ((S (y,x) mines prevAction state n m))) (yMine,xMine)
  | y > yMine = getToClosestMine(up ((S (y,x) mines prevAction state n m))) (yMine,xMine)
  | x < xMine = getToClosestMine(right ((S (y,x) mines prevAction state n m))) (yMine,xMine)
