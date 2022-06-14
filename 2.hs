@@ -23,7 +23,6 @@ right Null = Null
 right (S (y,x) mines prevAction state) | x >= 3 = Null
                                        | otherwise = (S (y,x+1) mines "right" ((S (y,x) mines prevAction state)))
 
--- delete Null x = x
 delete y (h:t) | h == y = t
                | otherwise = [h] ++ delete y t
 

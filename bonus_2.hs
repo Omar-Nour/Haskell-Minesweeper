@@ -1,7 +1,9 @@
 --NxM implementation
 type Cell = (Int,Int)
+--the two new ints are for the bounds of the grid
 data MyState = Null | S Cell [Cell] String MyState Int Int deriving (Show, Eq)
 
+--added grid bounds in type definitions
 up:: MyState -> MyState
 up Null = Null
 up (S (y,x) mines prevAction state n m) | y <= 0 = Null
@@ -22,7 +24,6 @@ right Null = Null
 right (S (y,x) mines prevAction state n m) | x >= m = Null
                                            | otherwise = (S (y,x+1) mines "right" (S (y,x) mines prevAction state n m) n m)
 
--- delete Null x = x
 delete y (h:t) | h == y = t
                | otherwise = [h] ++ delete y t
 
@@ -56,5 +57,6 @@ maxY [(y,x)] = y
 maxY ((y,x):t) | (maxY t) > y = maxY t
                | otherwise = y
 
+-- infer size of grid from initial position and mine positions
 solve :: Cell->[Cell]->[String]
-solve (y,x) (h:t) = constructSolution (search([(S (y,x) (h:t) "" Null (maxY (   [(y,x)]++(h:t)  ))   (   maxX ([(y,x)]++(h:t))    ) )]))
+solve (y,x) (h:t) = constructSolution (search([(S (y,x) (h:t) "" Null (maxY ([(y,x)]++(h:t))) (maxX ([(y,x)]++(h:t))))]))
